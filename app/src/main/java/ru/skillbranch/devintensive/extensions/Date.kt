@@ -33,24 +33,24 @@ fun Date.humanizeDiff(date: Date = Date()): String {
     var isBefore = diff < 0
     var absDiff:Long = diff.absoluteValue
     return when (absDiff) {
-        in 0..1 -> {
+        in 0 * SECOND..1 * SECOND -> {
             "только что"
         }
-        in 1..45 -> {
+        in 1 * SECOND..45 * SECOND -> {
             if (isBefore) {
                 "несколько секунд назад"
             } else {
                 "через несколько секунд"
             }
         }
-        in 45..75 -> {
+        in 45 * SECOND..75 * SECOND -> {
             if (isBefore) {
                 "минуту назад"
             } else {
                 "через минуту"
             }
         }
-        in 75..45 * MINUTE -> {
+        in 75 * SECOND..45 * MINUTE -> {
             val intervalString: String = TimeUnits.MINUTE.plural(Math.round(absDiff.toDouble() / MINUTE).toInt())
             if (isBefore) {
                 "$intervalString назад"

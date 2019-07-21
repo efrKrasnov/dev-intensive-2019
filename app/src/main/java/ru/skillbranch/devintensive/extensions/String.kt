@@ -15,3 +15,20 @@ fun String.stripHtml(): String {
     var noSpaceString =Regex("\\s+").replace(noTagString, " ")
     return Regex("&\\\\w+;|&#[0-9]+;|&#[xX][a-fA-F0-9]+;").replace(noSpaceString, "")
 }
+
+fun String.isContainsOnlyDigits():Boolean    {
+    for(char in this) {
+        if (!char.isDigit()) {
+            return false
+        }
+    }
+    return true
+}
+fun String.isContainsOnlyChars():Boolean    {
+    for(char in this) {
+        if (char.isDigit()) {
+            return false
+        }
+    }
+    return true
+}

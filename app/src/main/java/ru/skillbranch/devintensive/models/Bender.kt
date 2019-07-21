@@ -115,7 +115,7 @@ class Bender(
 
             override fun nextQuestion(): Question = IDLE
         },
-        IDLE("На этом всё, вопросов больше нет", listOf()) {
+        IDLE("На этом все, вопросов больше нет", listOf()) {
             override fun isValidated(string: String): String = ""
 
             override fun nextQuestion(): Question = IDLE

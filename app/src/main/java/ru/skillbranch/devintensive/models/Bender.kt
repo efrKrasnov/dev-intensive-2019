@@ -54,7 +54,7 @@ class Bender(
         NORMAL(Triple(255, 255, 255)),
         WARNING(Triple(255, 120, 0)),
         DANGER(Triple(255, 60, 60)),
-        CRITICAL(Triple(255, 255, 0));
+        CRITICAL(Triple(255, 0, 0));
 
         fun nextStatus(): Status {
             return if (this.ordinal < values().lastIndex) {

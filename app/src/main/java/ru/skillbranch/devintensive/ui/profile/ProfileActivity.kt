@@ -80,7 +80,7 @@ class ProfileActivity : AppCompatActivity() {
 
         btn_edit.setOnClickListener {
             if (isEditMode) {
-                if(!et_repository.text.toString().isValidRepository()) {
+                if(et_repository.text.toString().isValidRepository()) {
                     saveProfileInfo()
                 }
                 else    {

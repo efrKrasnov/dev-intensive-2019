@@ -196,12 +196,12 @@ class CircleImageView @JvmOverloads constructor(context: Context, @Nullable attr
     }
 
     @Dimension
-    fun getBorderWidth(): Float {
-        return getStrokeWidth()
+    fun getBorderWidth(): Int {
+        return getStrokeWidth().toInt()
     }
 
-    fun setBorderWidth(@Dimension width: Float) {
-        setStrokeWidth(width)
+    fun setBorderWidth(@Dimension width: Int) {
+        setStrokeWidth(width.toFloat())
     }
 
     fun getBorderColor():Int    {

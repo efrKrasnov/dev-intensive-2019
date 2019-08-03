@@ -43,11 +43,11 @@ object Utils {
     }
 
     fun transliteration(payload: String, divider: String = " "): String {
-        var result:String = ""
-        for (char in payload)   {
-            result += if(char == ' ') {
+        var result: String = ""
+        for (char in payload) {
+            result += if (char == ' ') {
                 divider
-            } else    {
+            } else {
                 toTransliterate(char)
             }
         }
@@ -57,7 +57,7 @@ object Utils {
     private fun toTransliterate(char: Char): String? {
         val isUpCase: Boolean = char.run { isUpperCase() }
 
-        return when (val tempChar: String? = transliterationTable[char?.toLowerCase()]) {
+        return when (val tempChar: String? = transliterationTable[char.toLowerCase()]) {
             null -> {
                 char.toString()
             }
@@ -106,4 +106,7 @@ object Utils {
         'ю' to "yu",
         'я' to "ya"
     )
+
+
+
 }

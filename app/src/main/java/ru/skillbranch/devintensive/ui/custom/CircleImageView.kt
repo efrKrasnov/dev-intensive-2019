@@ -46,14 +46,9 @@ class CircleImageView @JvmOverloads constructor(context: Context, @Nullable attr
 
         if(attrs != null)   {
             val a:TypedArray = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, 0, 0)
-<<<<<<< HEAD
+
             strokeColor = a.getColor(R.styleable.CircleImageView_cv_borderColor, DEFAULT_BORDER_COLOR)
             strokeWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_cv_borderWidth, DEFAULT_BORDER_WIDTH.toInt()).toFloat()
-=======
-            val defPxVal = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_BORDER_WIDTH, context.resources.displayMetrics)
-            strokeColor = a.getColor(R.styleable.CircleImageView_cv_borderColor, DEFAULT_BORDER_COLOR)
-            strokeWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_cv_borderWidth, defPxVal.toInt()).toFloat()
->>>>>>> c02a1906421cb7c9967db7d76efd25380c321c9f
             highlightEnable = a.getBoolean(R.styleable.CircleImageView_cv_highlightEnable, false)
             highlightColor = a.getColor(R.styleable.CircleImageView_cv_highlightColor, DEF_PRESS_HIGHLIGHT_COLOR)
 

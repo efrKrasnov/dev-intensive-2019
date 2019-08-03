@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.content.res.TypedArray
 import android.graphics.*
 import android.net.Uri
+import android.util.TypedValue
 import androidx.annotation.*
 import ru.skillbranch.devintensive.R
 
@@ -37,13 +38,6 @@ class CircleImageView @JvmOverloads constructor(context: Context, @Nullable attr
         private const val DEFAULT_BORDER_WIDTH = 2f
     }
 
-    private fun dpFromPx(px: Float): Float {
-        return px / context.resources.displayMetrics.density
-    }
-
-    private fun pxFromDp(dp: Float): Float {
-        return dp * context.resources.displayMetrics.density
-    }
     init {
         var strokeColor = Color.TRANSPARENT
         var strokeWidth = 0f
@@ -52,9 +46,8 @@ class CircleImageView @JvmOverloads constructor(context: Context, @Nullable attr
 
         if(attrs != null)   {
             val a:TypedArray = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, 0, 0)
-
             strokeColor = a.getColor(R.styleable.CircleImageView_cv_borderColor, DEFAULT_BORDER_COLOR)
-            strokeWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_cv_borderWidth, pxFromDp(DEFAULT_BORDER_WIDTH).toInt()).toFloat()
+            strokeWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_cv_borderWidth, DEFAULT_BORDER_WIDTH.toInt()).toFloat()
             highlightEnable = a.getBoolean(R.styleable.CircleImageView_cv_highlightEnable, false)
             highlightColor = a.getColor(R.styleable.CircleImageView_cv_highlightColor, DEF_PRESS_HIGHLIGHT_COLOR)
 

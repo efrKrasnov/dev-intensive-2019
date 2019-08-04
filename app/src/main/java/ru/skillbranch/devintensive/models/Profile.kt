@@ -11,7 +11,17 @@ data class Profile(
     val respect: Int = 0
 ) {
     val nickName: String
-        get() = Utils.transliteration("$firstName $lastName", "_")
+        get() {
+            return if (firstName.isEmpty() && lastName.isEmpty()) {
+                ""
+            } else if (firstName.isEmpty()) {
+                Utils.transliteration("$lastName", "_")
+            } else if (lastName.isEmpty()) {
+                Utils.transliteration("$firstName", "_")
+            } else {
+                Utils.transliteration("$firstName $lastName", "_")
+            }
+        }
     val rank: String = "Junior Android Developer"
 
     fun toMap(): Map<String, Any> = mapOf(
@@ -25,7 +35,4 @@ data class Profile(
         "respect" to respect
     )
 
-    fun repositoryCheck()    {
-
-    }
 }

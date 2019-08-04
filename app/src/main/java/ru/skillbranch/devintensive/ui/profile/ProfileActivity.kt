@@ -1,8 +1,5 @@
 package ru.skillbranch.devintensive.ui.profile
 
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -18,6 +15,15 @@ import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.extensions.isValidRepository
 import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
+import android.graphics.drawable.BitmapDrawable
+import ru.skillbranch.devintensive.ui.custom.CircleImageView
+import ru.skillbranch.devintensive.utils.Utils
+import android.graphics.*
+import android.util.TypedValue
+import androidx.core.content.res.ResourcesCompat
+
+
+
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -53,6 +59,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun updateTheme(mode: Int) {
         Log.d("M_ProfileActivity", "updateTheme")
         delegate.setLocalNightMode(mode)
+        createAvatar()
     }
 
     private fun updateUI(profile: Profile) {
@@ -115,6 +122,74 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
         )
+
+        et_first_name.addTextChangedListener(
+            object: TextWatcher {
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    createAvatar()
+                }
+            }
+        )
+
+        et_last_name.addTextChangedListener(
+            object: TextWatcher {
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    createAvatar()
+                }
+            }
+        )
+    }
+
+    fun createAvatar()  {
+        val typedValue = TypedValue()
+        theme.resolveAttribute(R.attr.colorAccent, typedValue, true)
+
+        var drawable:BitmapDrawable? = generateAvatar(
+            Utils.toInitials(et_first_name.text.toString(), et_last_name.text.toString()), getColor(typedValue.resourceId))
+        if(drawable != null) {
+            val image: CircleImageView = findViewById(R.id.iv_avatar)
+            image.setImageDrawable(drawable)
+        }
+        else    {
+            val image: CircleImageView = findViewById(R.id.iv_avatar)
+            image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_avatar, null))
+        }
+    }
+    private fun generateAvatar(name:String?, color:Int): BitmapDrawable? {
+        if (name == null) return null
+
+        val width = iv_avatar.layoutParams.width
+        val height = iv_avatar.layoutParams.height
+
+        val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(output)
+
+        val paintText = Paint()
+
+        canvas.drawColor(color)
+
+        paintText.color = Color.WHITE
+        paintText.textSize = height / 2f
+        paintText.textAlign = Paint.Align.CENTER
+        val xPos = canvas.width / 2
+        val yPos = (canvas.height / 2 - (paintText.descent() + paintText.ascent()) / 2)
+        canvas.drawText(name, xPos.toFloat(), yPos, paintText)
+
+        return BitmapDrawable(resources, output)
     }
 
     private fun showCurrentMode(isEdit: Boolean) {

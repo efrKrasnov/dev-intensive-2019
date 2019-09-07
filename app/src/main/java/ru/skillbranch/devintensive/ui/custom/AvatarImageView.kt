@@ -14,7 +14,7 @@ import androidx.annotation.*
 import ru.skillbranch.devintensive.R
 
 
-open class CircleImageView @JvmOverloads constructor(context: Context, @Nullable attrs: AttributeSet? = null) :
+open class AvatarImageView @JvmOverloads constructor(context: Context, @Nullable attrs: AttributeSet? = null) :
     ImageView(context, attrs) {
 
     private var mBitmapShader: Shader? = null
@@ -32,6 +32,8 @@ open class CircleImageView @JvmOverloads constructor(context: Context, @Nullable
     private var mPressed: Boolean = false
     private var mHighlightEnable: Boolean = false
 
+    private var initialsStr: String = ""
+
     companion object    {
         private const val DEF_PRESS_HIGHLIGHT_COLOR = 0x32000000
         private const val DEFAULT_BORDER_COLOR = Color.WHITE
@@ -45,12 +47,12 @@ open class CircleImageView @JvmOverloads constructor(context: Context, @Nullable
         var highlightColor = DEF_PRESS_HIGHLIGHT_COLOR
 
         if(attrs != null)   {
-            val a:TypedArray = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, 0, 0)
+            val a:TypedArray = context.obtainStyledAttributes(attrs, R.styleable.AvatarImageView, 0, 0)
 
-            strokeColor = a.getColor(R.styleable.CircleImageView_cv_borderColor, DEFAULT_BORDER_COLOR)
-            strokeWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_cv_borderWidth, DEFAULT_BORDER_WIDTH.toInt()).toFloat()
-            highlightEnable = a.getBoolean(R.styleable.CircleImageView_cv_highlightEnable, false)
-            highlightColor = a.getColor(R.styleable.CircleImageView_cv_highlightColor, DEF_PRESS_HIGHLIGHT_COLOR)
+            strokeColor = a.getColor(R.styleable.AvatarImageView_aiv_borderColor, DEFAULT_BORDER_COLOR)
+            strokeWidth = a.getDimensionPixelSize(R.styleable.AvatarImageView_aiv_borderWidth, DEFAULT_BORDER_WIDTH.toInt()).toFloat()
+            highlightEnable = false
+            highlightColor = DEF_PRESS_HIGHLIGHT_COLOR
 
             a.recycle()
         }
@@ -73,6 +75,30 @@ open class CircleImageView @JvmOverloads constructor(context: Context, @Nullable
         mInitialized = true
 
         setupBitmap()
+    }
+
+    fun setInitials(str:String)    {
+        initialsStr = str
+
+        val width = this.layoutParams.width
+        val height = this.layoutParams.height
+
+        val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(output)
+
+        val paintText = Paint()
+
+        canvas.drawColor(Color.BLACK)
+
+        paintText.color = Color.WHITE
+        paintText.textSize = height / 2f
+        paintText.textAlign = Paint.Align.CENTER
+
+        val xPos = canvas.width / 2
+        val yPos = (canvas.height / 2 - (paintText.descent() + paintText.ascent()) / 2)
+        canvas.drawText(initialsStr, xPos.toFloat(), yPos, paintText)
+
+        setImageDrawable(BitmapDrawable(resources, output))
     }
 
     override fun setImageResource(@DrawableRes resId: Int) {
@@ -105,30 +131,6 @@ open class CircleImageView @JvmOverloads constructor(context: Context, @Nullable
 
         updateBitmapSize()
 
-    }
-
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        var processed = false
-
-        when(event.action) {
-            MotionEvent.ACTION_DOWN ->  {
-                if(!isInCircle(event.x, event.y))   {
-                    return false
-                }
-                processed = true
-                mPressed = true
-                invalidate()
-            }
-            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
-                processed = true
-                mPressed = true
-                invalidate()
-                if(!isInCircle(event.x, event.y))   {
-                    return false
-                }
-            }
-        }
-        return super.onTouchEvent(event) || processed
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -291,12 +293,6 @@ open class CircleImageView @JvmOverloads constructor(context: Context, @Nullable
         return bitmap
     }
 
-    private fun isInCircle(x: Float, y: Float): Boolean {
-        val distance = Math.sqrt(Math.pow((mBitmapDrawBounds.centerX() - x).toDouble(), 2.0) +
-                Math.pow((mBitmapDrawBounds.centerY() - y).toDouble(), 2.0))
-
-        return distance <= (mBitmapDrawBounds.width() / 2)
-    }
 
 
 }

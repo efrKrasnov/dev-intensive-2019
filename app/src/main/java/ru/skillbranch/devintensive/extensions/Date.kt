@@ -182,3 +182,15 @@ enum class TimeUnits {
 
     abstract fun plural(value: Int): String
 }
+
+fun Date.shortFormat(): String {
+    val pattern = if(this.isSameDay(Date())) "HH:mm" else "dd.MM.yy"
+    val dateFormat = SimpleDateFormat(pattern, Locale("ru"))
+    return dateFormat.format(this)
+}
+
+fun Date.isSameDay(date: Date): Boolean {
+    val day1 = this.time / DAY
+    val day2 = date.time / DAY
+    return day1 == day2
+}

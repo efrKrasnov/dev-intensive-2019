@@ -53,7 +53,7 @@ class ArchiveActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
     private fun initToolbar() {
-        setSupportActionBar(toolbar_archive)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -70,23 +70,23 @@ class ArchiveActivity : AppCompatActivity() {
     private fun initViews() {
 
         chatAdapter = ChatAdapter {
-            Snackbar.make(rv_chat_list_archive, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(rv_archive_list, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
         }
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
 
         val touchCallback = ChatItemTouchHelperCallback(chatAdapter)    {
             viewModel.restoreFromArchive(it.id)
             val idStr = it.id
-            val snackbar = Snackbar.make(rv_chat_list_archive, "Восстановить чат с ${it.title} из архива?", Snackbar.LENGTH_LONG)
+            val snackbar = Snackbar.make(rv_archive_list, "Восстановить чат с ${it.title} из архива?", Snackbar.LENGTH_LONG)
             snackbar.setAction("ОТМЕНА") { viewModel.addToArchive(idStr) }
             snackbar.show()
         }
 
         val touchHelper = ItemTouchHelper(touchCallback)
 
-        touchHelper.attachToRecyclerView(rv_chat_list_archive)
+        touchHelper.attachToRecyclerView(rv_archive_list)
 
-        with(rv_chat_list_archive)  {
+        with(rv_archive_list)  {
             adapter = chatAdapter
             layoutManager = LinearLayoutManager(this@ArchiveActivity)
             addItemDecoration(divider)

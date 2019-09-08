@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_chat_archive.*
 import kotlinx.android.synthetic.main.item_chat_group.*
 import kotlinx.android.synthetic.main.item_chat_single.*
 import ru.skillbranch.devintensive.R
@@ -37,6 +38,7 @@ class ChatAdapter(val listener: (ChatItem) -> Unit) :
         return when(viewType)   {
             SINGLE_TYPE -> SingleViewHolder(inflater.inflate(R.layout.item_chat_single, parent, false))
             GROUP_TYPE -> GroupViewHolder(inflater.inflate(R.layout.item_chat_group, parent, false))
+            ARCHIVE_TYPE -> ArchiveViewHolder(inflater.inflate(R.layout.item_chat_archive, parent, false))
             else -> SingleViewHolder(inflater.inflate(R.layout.item_chat_single, parent, false))
         }
     }
@@ -155,6 +157,33 @@ class ChatAdapter(val listener: (ChatItem) -> Unit) :
 
             with(tv_message_author) {
                 visibility = if (item.messageCount > 0) View.VISIBLE else View.GONE
+                text = "@${item.author}"
+            }
+
+            itemView.setOnClickListener {
+                listener.invoke(item)
+            }
+        }
+    }
+
+    inner class ArchiveViewHolder(convertView: View) : ChatItemViewHolder(convertView){
+        override val containerView: View?
+            get() = itemView
+
+        override fun bind(item: ChatItem, listener: (ChatItem) -> Unit) {
+            with(tv_date_archive) {
+                visibility = if (item.lastMessageDate != null) View.VISIBLE else View.GONE
+                text = item.lastMessageDate
+            }
+
+            with(tv_counter_archive) {
+                visibility = if (item.messageCount > 0) View.VISIBLE else View.GONE
+                text = item.messageCount.toString()
+            }
+
+            tv_message_archive.text = item.shortDescription
+
+            with(tv_message_author_archive) {
                 text = item.author
             }
 

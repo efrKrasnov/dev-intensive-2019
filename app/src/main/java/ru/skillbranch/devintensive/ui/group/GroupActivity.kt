@@ -31,6 +31,7 @@ class GroupActivity : AppCompatActivity() {
         initToolbar()
         initViews()
         initViewModel()
+        supportActionBar!!.title="Создание группы"
     }
 
     override fun onCreateOptionsMenu(menu: Menu?):Boolean   {

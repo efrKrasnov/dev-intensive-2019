@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.group.GroupActivity"></activity>
+        <activity android:name=".ui.archive.ArchiveActivity"></activity>
         <activity
                 android:name=".ui.profile.ProfileActivity"
                 android:theme="@style/SplashTheme_1"></activity>

@@ -23,17 +23,17 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="?attr/actionBarSize">
+            android:layout_marginTop="?attr/actionBarSize"
+            android:orientation="vertical">
 
         <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/spacing_normal_16"
-                android:paddingRight="@dimen/spacing_normal_16"
                 android:layout_marginTop="@dimen/spacing_small_8"
                 android:layout_marginBottom="@dimen/spacing_small_8"
+                android:paddingLeft="@dimen/spacing_normal_16"
+                android:paddingRight="@dimen/spacing_normal_16"
                 android:visibility="gone">
 
         </com.google.android.material.chip.ChipGroup>
@@ -52,13 +52,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:layout_margin = "@dimen/spacing_normal_16"
-            app:srcCompat="@drawable/ic_arrow_forward_black_24dp"
-            android:visibility="invisible"
+            android:layout_margin="@dimen/spacing_normal_16"
             android:scaleX="0"
             android:scaleY="0"
-            tools:visibility="visible"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_arrow_forward_black_24dp"
             tools:scaleX="1"
-            tools:scaleY="1"/>
+            tools:scaleY="1"
+            tools:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

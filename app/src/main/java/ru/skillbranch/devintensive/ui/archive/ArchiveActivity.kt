@@ -1,8 +1,9 @@
-package ru.skillbranch.devintensive.ui.main
+package ru.skillbranch.devintensive.ui.archive
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -11,26 +12,26 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_archive.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.ui.adapters.ChatAdapter
 import ru.skillbranch.devintensive.ui.adapters.ChatItemTouchHelperCallback
-import ru.skillbranch.devintensive.ui.archive.ArchiveActivity
 import ru.skillbranch.devintensive.ui.group.GroupActivity
-import ru.skillbranch.devintensive.viewmodels.MainViewModel
+import ru.skillbranch.devintensive.viewmodels.ArchiveViewModel
 
 
-class MainActivity : AppCompatActivity() {
+class ArchiveActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: ArchiveViewModel
     private lateinit var chatAdapter: ChatAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_archive)
         initToolbar()
         initViews()
         initViewModel()
+        supportActionBar!!.title="Архив чатов"
     }
 
     override fun onCreateOptionsMenu(menu: Menu?):Boolean   {
@@ -52,48 +53,53 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
     private fun initToolbar() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar_archive)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return if(item?.itemId == android.R.id.home)   {
+            finish()
+            overridePendingTransition(R.anim.idle, R.anim.bottom_down)
+            true
+        } else    {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     private fun initViews() {
 
         chatAdapter = ChatAdapter {
-            if(it.isChatArchive())  {
-                val intent = Intent(this, ArchiveActivity::class.java)
-                startActivity(intent)
-            }
-            else {
-                Snackbar.make(rv_chat_list, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
-            }
+            Snackbar.make(rv_chat_list_archive, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
         }
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
 
         val touchCallback = ChatItemTouchHelperCallback(chatAdapter)    {
-            viewModel.addToArchive(it.id)
+            viewModel.restoreFromArchive(it.id)
             val idStr = it.id
-            val snackbar = Snackbar.make(rv_chat_list, "Вы точно хотите добавить ${it.title} в архив?", Snackbar.LENGTH_LONG)
-            snackbar.setAction("ОТМЕНА") { viewModel.restoreFromArchive(idStr) }
+            val snackbar = Snackbar.make(rv_chat_list_archive, "Восстановить чат с ${it.title} из архива?", Snackbar.LENGTH_LONG)
+            snackbar.setAction("ОТМЕНА") { viewModel.addToArchive(idStr) }
             snackbar.show()
         }
 
         val touchHelper = ItemTouchHelper(touchCallback)
 
-        touchHelper.attachToRecyclerView(rv_chat_list)
+        touchHelper.attachToRecyclerView(rv_chat_list_archive)
 
-        with(rv_chat_list)  {
+        with(rv_chat_list_archive)  {
             adapter = chatAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            layoutManager = LinearLayoutManager(this@ArchiveActivity)
             addItemDecoration(divider)
         }
 
-        fab.setOnClickListener{
+        fab_archive.setOnClickListener{
             val intent = Intent(this, GroupActivity::class.java)
             startActivity(intent)
         }
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(ArchiveViewModel::class.java)
         viewModel.getChatData().observe(this, Observer { chatAdapter.updateData(it) })
     }
 

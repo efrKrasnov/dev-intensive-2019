@@ -13,3 +13,8 @@ data class ChatItem (
     val chatType : ChatType = ChatType.SINGLE,
     var author :String? = null
 )
+{
+    fun isChatArchive(): Boolean {
+        return title == "Архив чатов"
+    }
+}

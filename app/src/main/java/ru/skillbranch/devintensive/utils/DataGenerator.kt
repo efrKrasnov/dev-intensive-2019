@@ -7,6 +7,7 @@ import ru.skillbranch.devintensive.models.BaseMessage
 import ru.skillbranch.devintensive.models.TextMessage
 import ru.skillbranch.devintensive.models.data.Chat
 import ru.skillbranch.devintensive.models.data.User
+import java.time.Clock
 import java.util.*
 import kotlin.random.Random
 
@@ -372,7 +373,8 @@ object DataGenerator {
             val singleChat = Chat(
                 "${list.size}",
                 "",
-                listOf(user)
+                listOf(user),
+                isArchived = Random.nextBoolean()
             )
             singleChat.messages = generateRandomMessages(singleChat, listOf(user))
             list.add(singleChat)
@@ -383,7 +385,8 @@ object DataGenerator {
             val groupChat = Chat(
                 "${list.size}",
                 members.map { it.firstName }.joinToString(", "),
-                members
+                members,
+                isArchived = Random.nextBoolean()
             )
             groupChat.messages = generateRandomMessages(groupChat, members)
             list.add(groupChat)
@@ -446,7 +449,7 @@ object DataGenerator {
                     chat,
                     true,
                     user.lastVisit ?: Date(),
-                    true,
+                    Random.nextBoolean(),
                     randomTextPayload()
                 )
             )

@@ -3,7 +3,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_size"
-        android:background="@android:color/white"
+        android:background="?attr/colorChatItemBackground"
         android:padding="@dimen/spacing_normal_16">
 
     <ru.skillbranch.devintensive.ui.custom.AvatarImageView
@@ -29,7 +29,7 @@
             android:layout_toLeftOf="@id/tv_date_single"
             android:layout_toRightOf="@id/iv_avatar_single"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/color_primary"
+            android:textColor="?attr/colorAuthorText"
             android:textSize="14sp"
             tools:text="chat title" />
 
@@ -42,7 +42,7 @@
             android:layout_marginRight="@dimen/spacing_normal_16"
             android:layout_toLeftOf="@id/tv_counter_single"
             android:layout_toRightOf="@id/iv_avatar_single"
-            android:textColor="@color/color_gray_dark"
+            android:textColor="?attr/colorMessageText"
             android:textSize="14sp"
             tools:text="Когда я проходил интенсив я мало спал" />
 
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:textColor="@color/color_gray_dark"
+            android:textColor="?attr/colorMessageText"
             android:textSize="10sp"
             tools:text="18:00" />
 

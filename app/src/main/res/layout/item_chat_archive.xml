@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_size"
         android:padding="@dimen/spacing_normal_16"
-        android:background="@android:color/white"
+        android:background="?attr/colorChatItemBackground"
         >
 
     <ImageView
@@ -25,7 +25,7 @@
             android:layout_toRightOf="@id/iv_avatar_archive"
             android:layout_toLeftOf="@id/tv_date_archive"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/color_primary"
+            android:textColor="?attr/colorAuthorText"
             android:textSize="14sp"
             android:text="Архив чатов"
             android:maxLines="1"/>
@@ -37,7 +37,7 @@
             android:layout_below="@id/tv_title_archive"
             android:layout_marginRight="@dimen/spacing_tiny_4"
             android:layout_toRightOf="@id/iv_avatar_archive"
-            android:textColor="@color/color_primary"
+            android:textColor="?attr/colorAuthorText"
             android:textSize="14sp"
             tools:text="John_Doe"/>
 
@@ -49,7 +49,7 @@
             android:layout_marginRight="@dimen/spacing_normal_16"
             android:layout_toRightOf="@id/tv_message_author_archive"
             android:layout_toLeftOf="@id/tv_counter_archive"
-            android:textColor="@color/color_gray_dark"
+            android:textColor="?attr/colorMessageText"
             android:textSize="14sp"
             tools:text="Когда я проходил интенсив я мало спал" />
 
@@ -60,7 +60,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:textSize="10sp"
-            android:textColor="@color/color_gray_dark"
+            android:textColor="?attr/colorMessageText"
             tools:text="18:00" />
 
     <TextView

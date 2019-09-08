@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item>
-        <shape android:shape="oval">
-            <solid android:color="?attr/colorArchiveIconBackground"/>
+        <shape android:shape="rectangle">
+            <corners android:radius="10dp"/>
+            <solid android:color="?attr/colorSnackbarBackground"/>
         </shape>
     </item>
 </selector>

@@ -2,6 +2,7 @@ package ru.skillbranch.devintensive.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +19,8 @@ import ru.skillbranch.devintensive.ui.adapters.ChatItemTouchHelperCallback
 import ru.skillbranch.devintensive.ui.archive.ArchiveActivity
 import ru.skillbranch.devintensive.ui.group.GroupActivity
 import ru.skillbranch.devintensive.viewmodels.MainViewModel
-
+import android.widget.TextView
+import androidx.annotation.DrawableRes
 
 class MainActivity : AppCompatActivity() {
 
@@ -63,7 +65,17 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             else {
-                Snackbar.make(rv_chat_list, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
+                val snackbar = Snackbar.make(rv_chat_list, "Click on ${it.title}", Snackbar.LENGTH_LONG)
+
+                snackbar.view.setBackgroundResource(R.drawable.bg_snackbar)
+
+                val typedValue = TypedValue()
+                val view = snackbar.view
+                val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+                theme.resolveAttribute(R.attr.colorSnackbarText, typedValue, true)
+                textView.setTextColor(typedValue.data)
+
+                snackbar.show()
             }
         }
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
@@ -73,6 +85,14 @@ class MainActivity : AppCompatActivity() {
             val idStr = it.id
             val snackbar = Snackbar.make(rv_chat_list, "Вы точно хотите добавить ${it.title} в архив?", Snackbar.LENGTH_LONG)
             snackbar.setAction("ОТМЕНА") { viewModel.restoreFromArchive(idStr) }
+            snackbar.view.setBackgroundResource(R.drawable.bg_snackbar)
+
+            val typedValue = TypedValue()
+            val view = snackbar.view
+            val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+            theme.resolveAttribute(R.attr.colorSnackbarText, typedValue, true)
+            textView.setTextColor(typedValue.data)
+
             snackbar.show()
         }
 

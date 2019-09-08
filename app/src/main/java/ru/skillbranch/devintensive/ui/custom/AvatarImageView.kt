@@ -37,7 +37,7 @@ open class AvatarImageView @JvmOverloads constructor(context: Context, @Nullable
     companion object    {
         private const val DEF_PRESS_HIGHLIGHT_COLOR = 0x32000000
         private const val DEFAULT_BORDER_COLOR = Color.WHITE
-        private const val DEFAULT_BORDER_WIDTH = 2f
+        private const val DEFAULT_BORDER_WIDTH = 0f
     }
 
     init {

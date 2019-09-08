@@ -2,6 +2,7 @@ package ru.skillbranch.devintensive.ui.adapters
 
 import android.graphics.Color
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,11 +90,17 @@ class ChatAdapter(val listener: (ChatItem) -> Unit) :
             get() = itemView
 
         override fun onItemSelected() {
-            itemView.setBackgroundColor(Color.LTGRAY)
+            val typedValue = TypedValue()
+            val theme = itemView.context.theme
+            theme.resolveAttribute(R.attr.colorChatItemBackground, typedValue, true)
+            itemView.setBackgroundColor(typedValue.data)
         }
 
         override fun onItemCleared() {
-            itemView.setBackgroundColor(Color.WHITE)
+            val typedValue = TypedValue()
+            val theme = itemView.context.theme
+            theme.resolveAttribute(R.attr.colorChatItemBackground, typedValue, true)
+            itemView.setBackgroundColor(typedValue.data)
         }
 
         override fun bind(item: ChatItem, listener: (ChatItem) -> Unit) {

@@ -16,8 +16,20 @@
         <attr name="aiv_borderWidth" format="dimension"/>
     </declare-styleable>
 
+    <attr name="colorChatItemBackground" format="reference"/>
     <attr name="colorAccentedSurface" format="reference"/>
     <attr name="colorDivider" format="reference"/>
     <attr name="colorIcon" format="reference"/>
-
+    <attr name="colorMessageText" format="reference"/>
+    <attr name="colorAuthorText" format="reference"/>
+    <attr name="colorCounterBackground" format="reference"/>
+    <attr name="colorArchiveIconBackground" format="reference"/>
+    <attr name="colorMessageSwipeOn" format="reference"/>
+    <attr name="colorIsOnline" format="reference"/>
+    <attr name="colorChipGroupBackground" format="reference"/>
+    <attr name="colorChipGroupXButton" format="reference"/>
+    <attr name="colorChipGroupX" format="reference"/>
+    <attr name="colorIsSelected" format="reference"/>
+    <attr name="colorSnackbarBackground" format="reference"/>
+    <attr name="colorSnackbarText" format="reference"/>
 </resources>

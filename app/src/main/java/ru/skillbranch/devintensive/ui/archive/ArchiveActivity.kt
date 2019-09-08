@@ -2,8 +2,10 @@ package ru.skillbranch.devintensive.ui.archive
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_archive.*
+import kotlinx.android.synthetic.main.activity_archive.toolbar
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.ui.adapters.ChatAdapter
 import ru.skillbranch.devintensive.ui.adapters.ChatItemTouchHelperCallback
@@ -70,7 +73,16 @@ class ArchiveActivity : AppCompatActivity() {
     private fun initViews() {
 
         chatAdapter = ChatAdapter {
-            Snackbar.make(rv_archive_list, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
+            val snackbar = Snackbar.make(rv_archive_list, "Click on ${it.title}", Snackbar.LENGTH_LONG)
+            snackbar.view.setBackgroundResource(R.drawable.bg_snackbar)
+
+            val typedValue = TypedValue()
+            val view = snackbar.view
+            val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+            theme.resolveAttribute(R.attr.colorSnackbarText, typedValue, true)
+            textView.setTextColor(typedValue.data)
+
+            snackbar.show()
         }
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
 
@@ -79,6 +91,14 @@ class ArchiveActivity : AppCompatActivity() {
             val idStr = it.id
             val snackbar = Snackbar.make(rv_archive_list, "Восстановить чат с ${it.title} из архива?", Snackbar.LENGTH_LONG)
             snackbar.setAction("ОТМЕНА") { viewModel.addToArchive(idStr) }
+            snackbar.view.setBackgroundResource(R.drawable.bg_snackbar)
+
+            val typedValue = TypedValue()
+            val view = snackbar.view
+            val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+            theme.resolveAttribute(R.attr.colorSnackbarText, typedValue, true)
+            textView.setTextColor(typedValue.data)
+
             snackbar.show()
         }
 
